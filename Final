@@ -1,0 +1,53 @@
+import random
+
+class Card:
+    def __init__(self, rank, suit):
+        self.rank = rank
+        self.suit = suit
+    def __str__(self):
+        return f"{self.rank} of {self.suit}"
+
+class Deck:
+    def __init__(self):
+        ranges = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
+        suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+        self.cards = [Card(range, suit) for range in ranges for suit in suits]
+    def shuffle(self):
+        random.shuffle(self.cards)
+    def draw_card(self):
+        if len(self.cards) > 0:
+            return self.cards.pop()
+        else:
+            return None
+
+class GuessTheCardGame:
+    def __init__(self):
+        self.deck = Deck(self)
+        self.deck.shuffle(self)
+        self.secret_card = self.deck.draw_card(self)
+    def get_user_guess(self):
+        while True:
+            user_guess = input("Guess the card (e.g., 2 of Hearts): ")
+            if user_guess == str(self.secret_card):
+                return user_guess
+            else:
+                print("Wrong. Try again.")
+    def play_game():
+        game = GuessTheCardGame()
+    while True:
+        print("Welcome to the Guess the Card Game!")
+        print("Guess a card from a full shuffled deck.")
+        while True:
+            user_guess = game.get_user_guess()
+            if user_guess == str(game.secret_card):
+                print("Correct! Congrats on finding the right card!")
+                break
+        play_again = input("\nDo you want to play again? (yes/no): ").lower()
+        if play_again != "yes":
+            break
+        game.deck.shuffle()
+        game.secret_card = game.deck.draw_card()
+    print("Thanks for playing!")
+
+if __name__ == "__main__":
+        play_game()
